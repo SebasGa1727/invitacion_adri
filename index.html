@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invitación Especial</title>
+    
+    <!-- Importación de Google Fonts: Playfair Display (Títulos) y Montserrat (Textos/Botones) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    
+    <!-- Enlace a la hoja de estilos -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Elemento de Audio (Oculto) -->
+    <audio id="bg-audio" src="assets\I Wanna Be Yours.mp3" preload="auto"></audio>
+
+    <!-- Estado 0: El Sobre -->
+    <section id="view-0" class="view envelope-view active">
+        <div class="envelope">
+            <!-- Representación de la solapa del sobre (visual) -->
+            <div class="envelope-flap"></div>
+            <!-- Cuerpo del sobre -->
+            <div class="envelope-body">
+                <!-- Sello de Cera que funciona como botón interactivo -->
+                <button id="btn-open-envelope" class="wax-seal">
+                    Presióname
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contenedor Principal para las Vistas 1, 2 y 3 (Fondo Marmoleado) -->
+    <main id="main-content" class="main-background hidden">
+        
+        <!-- Botón de Regresar (Global, fijo en la esquina superior izquierda) -->
+        <button id="btn-back" class="btn-back hidden">
+            <!-- Icono SVG de flecha de retorno -->
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="m15 18-6-6 6-6"/>
+            </svg>
+            Regresar
+        </button>
+
+        <!-- Vista 1: Pregunta Inicial -->
+        <section id="view-1" class="view content-view hidden">
+            <div class="card">
+                <h1 class="title">Hola preciosa <br> ¿Te gustaría que te cuente una historia?</h1>
+                
+                <!-- ==================================== -->
+                <!-- === CAMBIAR TEXTO DEL BOTÓN AQUÍ === -->
+                <!-- ==================================== -->
+                <button id="btn-yes" class="btn-primary">CHI</button>
+            </div>
+        </section>
+
+        <!-- Vista 2: El Mensaje -->
+        <section id="view-2" class="view content-view hidden">
+            <div class="card card-wide">
+                <p class="message-text">
+                    Hoy hace 26 años, una niña hermosa nacio, y sin saberlo, 18 años despues cambiaria completamente la vida a un vato loco, desorientado, perdido e inclusive un poco deshalentado.<br>
+                    Sin saberlo esa mujercita hermosa le dio un sentido a la vida de este vato loco, y le motivaria a dar lo mejor de si en cada momento de su vida.<br>
+                    Esa mujercita que se convirtio en un mujeron, le dio la oportunidad de conocer lo que es el amor verdadero y motivos para luchar por lo que queria, un enfoque y motivacion.<br>
+                    y hoy, despues de 8 años, este vato loco esta sumamente emocionado por festejarle al amor de su vida su cumpleaños, celebrar un año mas de experiencas aprendidas, caidas dolorosas y cambios inesperados.<br>
+                    Y empezar un nuevo año con nuevas metas, nuevos caminos, mejores conocimientos y mas preparada que nunca, este año sera muy importante, por que terminara de construir a la mujer que fue por 25 años, y<br>
+                    se convertira en la mujer que siempre devio ser, una en la que se ella misma pueda sentirse plena, segura y por supuesto amada.<br>
+                    Esta mujer es muy valiente y capaz, el vato loco se siente emocionado por verla, y pasar toda su vida con ella, asi que...
+                </p>
+                
+                <button id="btn-continue" class="btn-primary">Continuar...</button>
+            </div>
+        </section>
+
+        <!-- Vista 3: El Cierre -->
+        <section id="view-3" class="view content-view hidden">
+            <div class="card card-wide">
+                
+                <h2 class="title">¿Te gustaría darle un abrazo a ese vato loco y acompañarnos en tu fiesta? <br> Te estamos esperando...</h2>
+                
+                <!-- Contenedor para la imagen -->
+                <div class="image-container">
+                    <!-- ================================== -->
+                    <!-- === CAMBIAR RUTA DE LA IMAGEN AQUÍ === -->
+                    <!-- ================================== -->
+                    <img src="assets\imagen.jpeg" alt="Un momento especial" class="rounded-image">
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Enlace al archivo de JavaScript -->
+    <script src="script.js"></script>
+</body>
+</html>

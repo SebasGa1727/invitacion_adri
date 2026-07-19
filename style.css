@@ -1,0 +1,379 @@
+/* ==========================================================================
+   VARIABLES GLOBALES CSS (:root)
+   Aquí puedes personalizar todos los colores, tipografías y tiempos de animación.
+   ========================================================================== */
+:root {
+    /* Paleta de Colores Base */
+    --color-white: #ffffff;
+    --color-text-main: #2d3748; /* Texto principal oscuro y elegante */
+    --color-text-light: #4a5568; /* Texto secundario más suave */
+    
+    /* Colores del Sobre y Sello */
+    --color-bg-envelope: #fdfbf7; /* Blanco roto / crema muy sutil */
+    --color-wax-seal: #d32f2f; /* Color rojo profundo para simular cera */
+    --color-wax-seal-hover: #b71c1c;
+    
+    /* Colores de Elementos Interactivos (Botones) */
+    --color-primary: #81c784; /* Verde menta oscuro suave */
+    --color-primary-hover: #66bb6a;
+    
+    /* Colores del Fondo Marmoleado */
+    --color-marble-mint: #e0f2f1;
+    --color-marble-pink: #fce4ec;
+    --color-marble-white: #ffffff;
+    
+    /* Tipografía (Importada desde Google Fonts en el HTML) */
+    --font-heading: 'Playfair Display', serif; /* Títulos románticos */
+    --font-body: 'Montserrat', sans-serif; /* Textos legibles y modernos */
+    
+    /* Medidas: Sombras y Bordes */
+    --card-border-radius: 12px;
+    --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.08); /* Sombra suave para dar profundidad */
+    --button-radius: 30px; /* Bordes redondeados tipo píldora */
+    
+    /* Tiempos de Animación */
+    --transition-fast: 0.3s ease;
+    --transition-normal: 0.5s ease;
+    --transition-slow: 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ==========================================================================
+   RESET Y ESTILOS BASE
+   ========================================================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; /* Asegura que el padding no afecte el ancho total */
+}
+
+body {
+    font-family: var(--font-body);
+    color: var(--color-text-main);
+    background-color: var(--color-white);
+    overflow: hidden; /* Previene scroll durante las animaciones para una experiencia de app */
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* ==========================================================================
+   CLASES DE UTILIDAD PARA LA MÁQUINA DE ESTADOS
+   ========================================================================== */
+/* Clase base para todas las vistas (pantallas) */
+.view {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: opacity var(--transition-normal), transform var(--transition-normal);
+    z-index: 10;
+}
+
+/* Ocultar elementos del DOM para que no interactúen */
+.hidden {
+    display: none !important;
+}
+
+/* Animaciones de Transición (Fade in / Fade out) */
+.fade-out {
+    opacity: 0 !important;
+    pointer-events: none; /* Deshabilita clics mientras desaparece */
+}
+
+.fade-in {
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
+}
+
+/* ==========================================================================
+   ESTADO 0: EL SOBRE INICIAL
+   ========================================================================== */
+.envelope-view {
+    background-color: var(--color-bg-envelope);
+    z-index: 50; /* Máxima prioridad al inicio */
+}
+
+/* Contenedor visual del sobre */
+.envelope {
+    position: relative;
+    width: 90%;
+    max-width: 400px; /* Máximo ancho en móviles/desktop */
+    height: 250px;
+    background-color: #ffffff;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.1); /* Sombra pesada para dar realismo */
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* Transición para cuando el sobre se abre (zoom y desvanecimiento) */
+    transition: transform var(--transition-slow), opacity var(--transition-slow);
+}
+
+/* Estado animado del sobre (Zoom in y fade out) */
+.envelope.opening {
+    transform: scale(1.6); /* Acercamiento hacia la cámara */
+    opacity: 0; /* Se difumina */
+}
+
+/* Sello de cera interactivo */
+.wax-seal {
+    width: 85px;
+    height: 85px;
+    background-color: var(--color-wax-seal);
+    border-radius: 50%; /* Hacerlo un círculo perfecto */
+    border: none;
+    color: var(--color-white);
+    font-family: var(--font-heading);
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    /* Sombra exterior y sombra interior para volumen 3D */
+    box-shadow: 0 6px 15px rgba(211, 47, 47, 0.4), inset 0 0 15px rgba(0,0,0,0.2);
+    transition: transform var(--transition-fast), background-color var(--transition-fast), box-shadow var(--transition-fast);
+    z-index: 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+/* Efecto Hover del Sello */
+.wax-seal:hover {
+    transform: scale(1.08); /* Ligero crecimiento */
+    background-color: var(--color-wax-seal-hover);
+    box-shadow: 0 8px 20px rgba(183, 28, 28, 0.5), inset 0 0 15px rgba(0,0,0,0.3);
+}
+
+/* ==========================================================================
+   ESTADOS 1, 2 Y 3: EL FONDO MARMOLEADO
+   ========================================================================== */
+.main-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* Degradado CSS complejo simulando colores pastel y mármol */
+    background: radial-gradient(circle at 15% 50%, var(--color-marble-mint) 0%, transparent 60%),
+                radial-gradient(circle at 85% 30%, var(--color-marble-pink) 0%, transparent 60%),
+                radial-gradient(circle at 50% 80%, var(--color-marble-white) 0%, transparent 60%);
+    background-color: #f9f9f9; /* Color base de respaldo */
+    background-size: 200% 200%; /* Tamaño grande para permitir movimiento */
+    animation: marbleFloat 20s ease-in-out infinite alternate; /* Movimiento sutil continuo */
+    opacity: 0; /* Inicia oculto */
+    transition: opacity var(--transition-slow);
+    z-index: 10;
+}
+
+/* Keyframes para mover el fondo marmoleado suavemente */
+@keyframes marbleFloat {
+    0% { background-position: 0% 0%; }
+    100% { background-position: 100% 100%; }
+}
+
+/* ==========================================================================
+   COMPONENTES GLOBALES: TARJETAS Y BOTONES (UI MINIMALISTA)
+   ========================================================================== */
+.content-view {
+    padding: 20px; /* Margen seguro en móviles */
+    opacity: 0; /* Inician ocultos para el fade-in posterior */
+}
+
+/* Estilo del Recuadro Central Minimalista */
+.card {
+    background-color: var(--color-white);
+    padding: 40px 30px;
+    border-radius: var(--card-border-radius);
+    box-shadow: var(--card-shadow);
+    text-align: center;
+    width: 90%;
+    max-width: 400px;
+    /* Borde gris muy sutil como solicitado */
+    border: 1px solid rgba(0,0,0,0.04); 
+    
+    /* Animación de entrada inicial de la tarjeta (viene desde abajo) */
+    transform: translateY(30px);
+    transition: transform var(--transition-normal), opacity var(--transition-normal);
+
+    /* Contenedor Flex para control de dimensiones dinámico */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-height: 85vh; /* Límite del 85% de la altura de la pantalla */
+}
+
+/* Cuando la vista hace fade-in, la tarjeta vuelve a su posición original */
+.fade-in .card {
+    transform: translateY(0);
+}
+
+/* Modificador para tarjetas que requieran más espacio de texto */
+.card-wide {
+    max-width: 650px;
+}
+
+/* Tipografía de Títulos */
+.title {
+    font-family: var(--font-heading);
+    font-size: 1.8rem;
+    color: var(--color-text-main);
+    margin-bottom: 30px;
+    line-height: 1.4;
+    font-weight: 600;
+    flex-shrink: 0; /* Previene que el texto comprimido achique el título */
+}
+
+/* Tipografía de Textos Largos */
+.message-text {
+    font-family: var(--font-body);
+    font-size: 1.05rem;
+    color: var(--color-text-light);
+    line-height: 1.7;
+    margin-bottom: 25px;
+    text-align: center; /* Alineación centrada para estética romántica */
+
+    /* Comportamiento de Scroll Dinámico y Flexbox */
+    overflow-y: auto; 
+    flex: 1 1 auto; /* Crece y se encoge basado en el contenedor padre */
+    min-height: 0; /* Obligatorio en CSS Flexbox para habilitar el scroll interno */
+    padding-right: 10px; /* Espacio para que la barra de scroll no se superponga al texto */
+}
+
+/* Diseño minimalista para la barra de scroll (Navegadores basados en Webkit) */
+.message-text::-webkit-scrollbar {
+    width: 5px;
+}
+.message-text::-webkit-scrollbar-track {
+    background: rgba(0,0,0,0.03); 
+    border-radius: 10px;
+}
+.message-text::-webkit-scrollbar-thumb {
+    background: rgba(0,0,0,0.15); 
+    border-radius: 10px;
+}
+.message-text::-webkit-scrollbar-thumb:hover {
+    background: rgba(0,0,0,0.25); 
+}
+
+/* Botón Principal */
+.btn-primary {
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    border: none;
+    padding: 14px 40px;
+    font-size: 1rem;
+    font-family: var(--font-body);
+    font-weight: 600;
+    border-radius: var(--button-radius);
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(129, 199, 132, 0.4); /* Resplandor del color principal */
+    transition: background-color var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast);
+    flex-shrink: 0; /* Mantiene las proporciones del botón intactas */
+}
+
+/* Hover Botón Principal */
+.btn-primary:hover {
+    background-color: var(--color-primary-hover);
+    transform: translateY(-3px); /* Se eleva al pasar el mouse */
+    box-shadow: 0 6px 20px rgba(102, 187, 106, 0.5);
+}
+
+/* ==========================================================================
+   COMPONENTES ESPECÍFICOS: BOTÓN REGRESAR E IMÁGENES
+   ========================================================================== */
+/* Botón sutil de retroceso */
+.btn-back {
+    position: absolute;
+    top: 25px;
+    left: 25px;
+    background: rgba(255, 255, 255, 0.6);
+    border: 1px solid rgba(0,0,0,0.06);
+    color: var(--color-text-light);
+    padding: 10px 18px;
+    border-radius: var(--button-radius);
+    font-family: var(--font-body);
+    font-weight: 500;
+    font-size: 0.9rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px; /* Espacio entre icono y texto */
+    z-index: 100; /* Siempre disponible y arriba */
+    backdrop-filter: blur(8px); /* Efecto Glassmorphism */
+    -webkit-backdrop-filter: blur(8px);
+    transition: opacity var(--transition-normal), background var(--transition-fast), color var(--transition-fast);
+    opacity: 0; /* Oculto por defecto */
+}
+
+.btn-back:hover {
+    background: rgba(255, 255, 255, 1);
+    color: var(--color-text-main);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+/* Contenedor e Imagen de la Vista 3 */
+.image-container {
+    width: 100%;
+    margin-top: 20px;
+    border-radius: 10px;
+    overflow: hidden; /* Asegura que la imagen no se salga de los bordes redondeados */
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+
+    /* Evita que Flexbox aplaste la imagen y le permite usar el espacio vertical sobrante */
+    flex: 1 1 auto;
+    min-height: 0; /* Crucial para que respete el límite de altura del padre sin desbordarse */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0,0,0,0.02); /* Fondo sutil por si la imagen no llena todo el ancho */
+}
+
+.rounded-image {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+
+    /* 'contain' fuerza a que TODA la imagen sea visible respetando sus proporciones (aspect-ratio), 
+       sin importar la forma del contenedor */
+    object-fit: contain; 
+
+    /* Transición sutil al cargar la imagen */
+    transition: transform 0.5s ease;
+}
+
+.image-container:hover .rounded-image {
+    transform: scale(1.02); /* Efecto zoom sutil al pasar el cursor */
+}
+
+/* ==========================================================================
+   MEDIA QUERIES - RESPONSIVIDAD (Diseño Mobile-First adaptándose a Escritorio)
+   ========================================================================== */
+@media (min-width: 768px) {
+    /* En pantallas más grandes, aumentamos el tamaño de textos y recuadros */
+    .title {
+        font-size: 2.2rem;
+    }
+    
+    .message-text {
+        font-size: 1.15rem;
+    }
+    
+    .card {
+        padding: 50px 45px;
+    }
+    
+    /* Ajuste del botón regresar en pantallas grandes */
+    .btn-back {
+        top: 40px;
+        left: 40px;
+        padding: 12px 24px;
+        font-size: 1rem;
+    }
+}
